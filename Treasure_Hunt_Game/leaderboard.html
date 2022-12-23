@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LeaderBoard</title>
+    <style>
+
+        *{
+            height: fit-content;
+        }
+
+        .container{
+            height: 50%;
+        }
+        table {
+            color: black;
+            background-color:lightslategrey;
+            border-radius: 4px;
+            margin :auto;
+            padding: 3px;
+            max-width: max-content;
+            width: 400px;
+        }
+        a {
+            text-shadow: #0074d9;
+            color: blue;
+            padding:2px;
+            background-color:lightslategrey;
+            margin :auto;
+        }
+        thead {
+            color:black;
+            background-color: lightsteelblue;
+        }
+
+        tbody {
+            background-color: azure;
+        }
+        
+        body {
+        background-color: black;
+        color: #0074d9;
+        text-align: center;
+        justify-content: center;
+        height: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="./index.html">Back</a>
+    <div class = "container">
+
+    
+    <center >
+      <h1>LeaderBoard Page</h1>
+      <table id = "leaderboard">
+        <thead>
+          <tr>
+            <th>Player Name</th>
+            <th>Rank</th>
+            <th>Attempts</th>
+          </tr>
+        </thead>
+        <tbody id = "my-board">
+        </tbody>
+      </table>
+    </center>
+</div>
+  </body>
+
+<script>
+
+let leaderboardarray = [];
+let winnerData = JSON.parse(localStorage.getItem("winner"));
+let myboard = document.getElementById("my-board");
+let row,col;
+for ( let i = 0; i<3;i++){
+    row = document.createElement("tr")
+    for(let j = 0; j< 3;j++){
+        col = document.createElement("td");
+        console.log(col);
+        console.log(j);
+        if(j==0) {
+            col.innerText = i+1;
+        }
+        if(j == 1){
+            col.innerText = winnerData[i][0].attempts;
+        }
+        if (j==2) {
+            let str ="";
+            winnerData[i].forEach((ele)=>{
+                str+= ele.playerName;
+                col.innerText = str;
+                str += " "
+            });
+        }
+        row.appendChild(col);
+    }
+    myboard.appendChild(row);
+}
+</script>
+
+</html>
+
+<!-- 
+let leaderboardarray = [];
+let winners = JSON.parse(localStorage.getItem("winner"));
+winners.sort((a, b) => {
+    return a.attempts - b.attempts;
+})
+winners[0].rank = 1;
+for (let i = 1; i < winners.length; i++) {
+    if (winners[i].attempts == winners[i - 1].attempts) { winners[i].rank = winners[i - 1].rank }
+    else { winners[i].rank = winners[i - 1].rank + 1; }
+}
+let rank1 = winners.filter((ele) => ele.rank == 1);
+let rank2 = winners.filter((ele) => ele.rank == 2);
+let rank3 = winners.filter((ele) => ele.rank == 3);
+leaderboardarray.push(rank1, rank2, rank3);
+let table = document.getElementById("leaderboard-body");
+let row, column, str = "";
+for (let i = 0; i < 3; i++) {
+    row = document.createElement("tr");
+    for (let j = 0; j < 3; j++) {
+        column = document.createElement("td");
+        if (j == 0) {
+            column.innerText = leaderboardarray[i][0].rank;
+            if (leaderboardarray[i][0].rank == undefined) column.innerText = "--";
+        }
+        if (j == 1) {
+            if (leaderboardarray[i][0].attempts == undefined) column.innerText = "--";
+            column.innerText = leaderboardarray[i][0].attempts;
+        }
+        if (j == 2) {
+            if (leaderboardarray[i][0].name == undefined) column.innerText = "--";
+            str = "";
+            leaderboardarray[i].forEach(element => {
+                str += element.username;
+                column.innerText = str;
+                str += " , "
+            });
+        }
+        row.appendChild(column);
+    }
+    table.appendChild(row);
+11:57
+} -->
